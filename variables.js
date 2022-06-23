@@ -5,33 +5,28 @@ class usuario{
     this.libros = libros;
     this.mascotas = mascotas;
   }
+  getFullName (){
+    return`${this.nombre} ${this.apellido}` ;
+  }
+  addLibro(libro){
+    this.libros.push(libro);
+  }
+  addmascota(mascota){
+    this.mascotas.push(mascota);
+  }
+  countMascotas(){
+    return this.mascotas.length;
+  }
+  getBookNames(){
+    return this.libros
+  }
 }
-
 let usuario1 = new usuario("Antonio", "Lopez", ["Harry Potter", "El señor de los anillos"], ["Perro", "Gato"]);
 
-getFullName = () => {
-  console.log( `${usuario1.nombre} ${usuario1.apellido}`);
-}
-getFullName();
-
-addMascota = () => {
-  usuario1.mascotas.push('Leon');
-}
-addMascota();
-console.log(usuario1.mascotas)
-
-countMascotas = () => {
-  console.log(usuario1.mascotas.length);
-}
-countMascotas();
-
-addLibro = () => {
-  usuario1.libros.push('LoveCraft');
-  console.log(usuario1.libros);
-}
-addLibro();
-
-getBookNames = () => {
-  console.log(usuario1.libros);
-}
-getBookNames();
+console.log(usuario1.getFullName());
+usuario1.addLibro("El señor de los anillos 2");
+console.log(usuario1.libros);
+usuario1.addmascota("Pez");
+console.log(usuario1.mascotas);
+console.log(usuario1.countMascotas());
+console.log(usuario1.getBookNames());
