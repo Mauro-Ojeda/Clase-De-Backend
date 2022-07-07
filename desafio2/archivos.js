@@ -1,7 +1,5 @@
 const fs = require('fs');
-
 class Contenedor {
-
   constructor(title){
     this.title =title;
   }
@@ -14,27 +12,14 @@ class Contenedor {
         console.log(err.message);
     };
 };
-//   async save(object){
-//   const data = await fs.promises.readFile(this.title, 'utf-8');
-//   const previousInfo = JSON.parse(data);
-
-//   let newId = previousInfo[previousInfo.length - 1].id + 1;
-//   object.id = newId;
-
-//   let newArray = [...previousInfo, object];
-//   await fs.promises.writeFile(this.title, JSON.stringify(newArray));
-  
-// }
 async save(object) {
   try {
       //Read prior data
       const data = await fs.promises.readFile(this.title, 'utf-8');
       const previousInfo = JSON.parse(data);
-
       //Get id
       let newId = previousInfo[previousInfo.length - 1].id + 1;
       object.id = newId;
-
       //Write data
       let newArray = [...previousInfo, object];
       await fs.promises.writeFile(this.title, JSON.stringify(newArray));
@@ -73,21 +58,36 @@ console.log(data)
   }
 }
 const newProduct = new Contenedor("./productos.txt");
-// console.log(newProduct.getAll());
-
-  function map(){
-    newProduct.getAll().then(data => console.log(data));
-    
+const arrayDePrueba=[
+  {"title":"Calculadora",
+  "price":234.56,
+  "thumbnail":"https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png","id":1}
+]
+function map(productosAMostrar){
+  let acumuladorDeCards= document.getElementById("contenedor");
+  acumuladorDeCards.innerHTML="";
+  productosAMostrar.forEach(element => {
+    return  acumuladorDeCards.innerHTML +=
+    `
+    <div class="card">
+    <img src="${element.thumbnail}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">${element.title}</h5>
+      <p class="card-text">${element.price}</p>
+      </div>
+      </div>
+      `
   }
-
-
+    )
+}
+map();
 // *********************************************************************************************
 const express = require('express');
 const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-    res.send(mapear());
+    res.send('Hello World!');
 });
 
 app.get('/productos', (req, res) => {
@@ -105,17 +105,3 @@ app.listen(port,()=>{
 );
 
 app.on("error",error =>console.log("el error es" +error));
-
-const random = (min , max) => Math.floor(Math.random() * (max - min + 1) + min);
-
-  const mapear = (data) => {
-    let res = [];
-    for (let i = 0; i < data.length; i++) {
-      res.push({
-        id: data[i].id,
-        name: data[i].name,
-        price: data[i].price,
-      });
-    }
-    return res;
-  };
